@@ -1,2 +1,2 @@
 # Spring-Boot-Microservices
-A spring boot microservices project for personal learning
+A spring boot-microservices project for self-learning
