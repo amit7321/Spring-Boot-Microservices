@@ -4,6 +4,7 @@ import com.example.accounts.constants.AccountsConstants;
 import com.example.accounts.dto.CustomerDto;
 import com.example.accounts.entity.Accounts;
 import com.example.accounts.entity.Customer;
+import com.example.accounts.exception.CustomerAlreadyExistException;
 import com.example.accounts.mappper.CustomerMapper;
 import com.example.accounts.repository.AccountsRepository;
 import com.example.accounts.repository.CustomerRepository;
@@ -11,6 +12,8 @@ import com.example.accounts.service.IAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -23,6 +26,14 @@ public class AccountsServiceImpl implements IAccountService {
     @Override
     public void createAccount(CustomerDto customerDto) {
         Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
+        Optional<Customer> customrMobileNumber = customerRepository.findByMobileNumber(customer.getMobileNumber());
+        if (customrMobileNumber.isPresent()) {
+            throw new CustomerAlreadyExistException("""
+                    Customer already present with this ($customerMobileNumber).
+                    """.replace("$customerMobileNumber", customerDto.getMobileNumber()));
+        }
+        customer.setCreateAt(LocalDateTime.now());
+        customer.setCreatedBy("Anonymous");
         Customer customerSaved = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(customerSaved));
     }
