@@ -5,7 +5,7 @@ import com.example.accounts.entity.Customer;
 
 public class CustomerMapper {
 
-    public static CustomerDto mapToCustomerDto(CustomerDto customerDto, Customer customer){
+    public static CustomerDto mapToCustomerDto(Customer customer, CustomerDto customerDto){
         customerDto.setId(customer.getId());
         customerDto.setName(customer.getName());
         customerDto.setEmail(customer.getEmail());

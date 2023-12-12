@@ -22,11 +22,8 @@ public class Customer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native")
     private Long id;
-
     private String name;
-
     private String email;
-
     private String mobileNumber;
 
 }
