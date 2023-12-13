@@ -1,14 +1,13 @@
 package com.example.accounts.repository;
 
-import com.example.accounts.entity.Accounts;
-import com.example.accounts.entity.Customer;
+import com.example.accounts.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface AccountsRepository extends JpaRepository<Accounts, Long> {
+public interface AccountsRepository extends JpaRepository<Account, Long> {
 
-    Optional<Accounts> findByCustomerId(Long customerId);
+    Optional<Account> findByCustomerId(Long customerId);
 }

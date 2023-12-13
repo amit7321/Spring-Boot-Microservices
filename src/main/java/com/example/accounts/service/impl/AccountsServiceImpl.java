@@ -3,7 +3,7 @@ package com.example.accounts.service.impl;
 import com.example.accounts.constants.AccountsConstants;
 import com.example.accounts.dto.AccountsDto;
 import com.example.accounts.dto.CustomerDto;
-import com.example.accounts.entity.Accounts;
+import com.example.accounts.entity.Account;
 import com.example.accounts.entity.Customer;
 import com.example.accounts.exception.CustomerAlreadyExistException;
 import com.example.accounts.exception.ResourceNotfoundException;
@@ -35,19 +35,21 @@ public class AccountsServiceImpl implements IAccountService {
                     Customer already present with this ($customerMobileNumber).
                     """.replace("$customerMobileNumber", customerDto.getMobileNumber()));
         }
-        customer.setCreateAt(LocalDateTime.now());
+        customer.setCreatedAt(LocalDateTime.now());
         customer.setCreatedBy("Anonymous");
         Customer customerSaved = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(customerSaved));
     }
 
-    private Accounts createNewAccount(Customer customer) {
-        Accounts newAccount = new Accounts();
+    private Account createNewAccount(Customer customer) {
+        Account newAccount = new Account();
         newAccount.setCustomerId(customer.getId());
         long newAccountNumber = 10000000L + new Random().nextInt(90000000);
         newAccount.setAccountNumber(newAccountNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
+        newAccount.setCreatedAt(LocalDateTime.now());
+        newAccount.setCreatedBy("Anonymous");
 
         return newAccount;
     }
@@ -58,7 +60,7 @@ public class AccountsServiceImpl implements IAccountService {
                 () -> new ResourceNotfoundException("Customer", "mobileNumber", mobileNumber)
         );
 
-        Accounts accounts = accountsRepository.findByCustomerId(customer.getId()).orElseThrow(
+        Account accounts = accountsRepository.findByCustomerId(customer.getId()).orElseThrow(
                 () -> new ResourceNotfoundException("Accounts", "customerId", customer.getId().toString())
         );
 
