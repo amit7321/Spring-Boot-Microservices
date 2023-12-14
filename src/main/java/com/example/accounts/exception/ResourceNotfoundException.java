@@ -8,7 +8,7 @@ public class ResourceNotfoundException extends RuntimeException{
 
     public ResourceNotfoundException(String resourceName, String fieldName, String fieldValue) {
         super("""
-                %x not found with the given input data $y: $z
+                $x not found with the given input data $y: $z
                 """.formatted(resourceName, fieldName, fieldValue));
     }
 }

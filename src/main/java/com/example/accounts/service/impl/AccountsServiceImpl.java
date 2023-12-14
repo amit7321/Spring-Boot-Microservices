@@ -85,7 +85,7 @@ public class AccountsServiceImpl implements IAccountService {
                     () -> new ResourceNotfoundException("Customer", "CustomerId", customerId.toString())
             );
             CustomerMapper.mapToCustomer(customerDto, customer);
-               customerRepository.save(customer);
+            customerRepository.save(customer);
             isUpdated = true;
         }
         return isUpdated;
