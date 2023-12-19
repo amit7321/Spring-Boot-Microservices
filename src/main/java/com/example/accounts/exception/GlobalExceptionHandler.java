@@ -12,19 +12,18 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(CustomerAlreadyExistException.class)
-    public ResponseEntity<ErrorResponseDto> handleCustomerAlreadyExistException(CustomerAlreadyExistException customerAlreadyExistException,
-                                                                                WebRequest webRequest) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDto> handleGlobalException(Exception exception, WebRequest webRequest) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false),
-                HttpStatus.BAD_REQUEST,
-                customerAlreadyExistException.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
                 LocalDateTime.now());
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceNotfoundException.class)
     public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotfoundException resourceNotfoundException,
-                                                                                WebRequest webRequest) {
+                                                                            WebRequest webRequest) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false),
                 HttpStatus.NOT_FOUND,
                 resourceNotfoundException.getMessage(),
