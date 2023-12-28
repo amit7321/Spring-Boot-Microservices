@@ -4,6 +4,9 @@ import com.example.accounts.constants.AccountsConstants;
 import com.example.accounts.dto.CustomerDto;
 import com.example.accounts.dto.ResponseDto;
 import com.example.accounts.service.IAccountService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 
+@Tag(
+        name = "CRUD Rest Api for Account",
+        description = "CRUD Rest Api for Account for create, update, fetch and delete"
+)
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -23,6 +30,14 @@ public class AccountsController {
 
     private IAccountService iAccountService;
 
+    @Operation(
+            summary = "Create accounts rest api",
+            description = "REST api to create new customer and account"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP Status OK"
+    )
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         iAccountService.createAccount(customerDto);
