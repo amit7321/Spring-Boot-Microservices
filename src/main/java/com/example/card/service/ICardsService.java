@@ -1,5 +1,7 @@
-package com.example.card.service.impl;
+package com.example.card.service;
 
+
+import com.example.card.dto.CardsDto;
 
 public interface ICardsService {
 
